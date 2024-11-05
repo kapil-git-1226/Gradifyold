@@ -192,6 +192,10 @@
             gap: 1rem;
             margin-top: 2rem;
         }
+        .feature-btn a {
+            text-decoration: none;
+            display: block;
+        }
 
         .feature-btn {
             background-color: #2d2d2d;
@@ -201,6 +205,8 @@
             color: #ffffff;
             cursor: pointer;
             transition: background-color 0.3s;
+            text-align: center;
+            width: 100%;
             text-align: center;
         }
 
@@ -285,15 +291,15 @@
 <body>
     <header class="header">
         <div class="nav-container">
-            <a href="#" class="logo">GRADIFY</a>
+            <a href="./../dashboard/gradify-static.html" class="logo">GRADIFY</a>
             
             <nav class="nav-links">
                 <a href="#">Home</a>
-                <a href="#">Lectures</a>
-                <a href="#">Notes</a>
-                <a href="#">PYQ</a>
-                <a href="#">Grade Predictor</a>
-                <a href="#">About</a>
+                <a href="./../lectures/lectures-page.html">Lectures</a>
+                <a href="./../notes/gradify-notes.html">Notes</a>
+                <a href="./../pyq/pyq.html">PYQ</a>
+                <a href="./../grade_calculator/gradify-calculator.html">Grade Predictor</a>
+                <a href="./../about/gradify-about.html">About</a>
                 <a href="#">Groups</a>
             </nav>
 
@@ -308,12 +314,12 @@
     </header>
 
     <div class="mobile-menu" id="mobileMenu">
-        <a href="#">Home</a>
-        <a href="#">Lectures</a>
-        <a href="#">Notes</a>
-        <a href="#">PYQ</a>
-        <a href="#">Grade Predictor</a>
-        <a href="#">About</a>
+        <a href="./../dashboard/gradify-static.html">Home</a>
+        <a href="./../lectures/lectures-page.html">Lectures</a>
+        <a href="./../notes/gradify-notes.html">Notes</a>
+        <a href="./../pyq/pyq.html">PYQ</a>
+        <a href="./../grade_calculator/gradify-calculator.html">Grade Predictor</a>
+        <a href="./../about/gradify-about.html">About</a>
         <a href="#">Groups</a>
     </div>
 
@@ -326,27 +332,36 @@
                 <p>Join thousands of students who trust us as their go-to resource hub. Take the next step towards success today!</p>
 
                 <div class="feature-buttons">
-                    <button class="feature-btn">
-                        <span>💻</span>
-                        Lectures
-                    </button>
-                    <button class="feature-btn" >
-                        <!-- <span>✏️</span> -->
-                        <a href="./../notes/gradify-notes.html">✏️</a>
-                        Notes
-                    </button>
-                    <button class="feature-btn">
-                        <span>📄</span>
-                        PYQ
-                    </button>
-                    <button class="feature-btn">
-                        <span>✓</span>
-                        Grade Predictor
-                    </button>
-                    <button class="feature-btn">
-                        <span>👥</span>
-                        Groups
-                    </button>
+                    <a href="./../lectures/lectures-page.html">
+                        <button class="feature-btn">
+                            <span>💻</span>
+                            Lectures
+                        </button>
+                    </a>
+                    <a href="./../notes/gradify-notes.html">
+                        <button class="feature-btn" >
+                            <span>✏️</span>
+                            Notes
+                        </button>
+                    </a>
+                    <a href="./../pyq/pyq.html"> 
+                        <button class="feature-btn">
+                            <span>📄</span>
+                            PYQ
+                        </button>
+                    </a>
+                    <a href="./../grade_calculator/gradify-calculator.html">
+                        <button class="feature-btn">
+                            <span>✓</span>
+                            Grade Predictor
+                        </button>
+                    </a>
+                    <a href="">
+                        <button class="feature-btn">
+                            <span>👥</span>
+                            Groups
+                        </button>
+                    </a>
                 </div>
 
                 <div class="important-docs">
@@ -356,7 +371,7 @@
                             B.TECH BROCHURE
                             <span>↗</span>
                         </a>
-                        <a href="#" class="doc-link">
+                        <a href="https://drive.google.com/file/d/12EhRZVzYSNLzGvPwx5WtncUs3aWGpdtZ/view?usp=drive_link" class="doc-link">
                             ACADEMIC CALENDER
                             <span>↗</span>
                         </a>
@@ -364,7 +379,7 @@
                             HOLIDAYS CALENDER
                             <span>↗</span>
                         </a>
-                        <a href="#" class="doc-link">
+                        <a href="https://drive.google.com/file/d/12EBlZ9-E4HM2EqRyat2D8oOufrvRbpCa/view?usp=drive_link" class="doc-link">
                             CGDC REPORT
                             <span>↗</span>
                         </a>
