@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gradify Clone</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        body {
+            background-color: #1a1a1a;
+            color: white;
+        }
+
+        .navbar {
+            background-color: #242424;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #e0e0e0;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .nav-links a:hover {
+            color: white;
+        }
+
+        .profile-btn {
+            background-color: #333;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            border: none;
+            background: none;
+            padding: 0.5rem;
+        }
+
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            margin: 5px 0;
+            transition: all 0.3s ease;
+        }
+
+        .main-content {
+            padding: 2rem;
+            transition: margin-left 0.3s ease;
+        }
+
+        .semester-select {
+            position: relative;
+            width: 200px;
+        }
+
+        .select-btn {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: #333;
+            border: none;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            text-align: left;
+        }
+
+        .dropdown-content {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background-color: #333;
+            border-radius: 4px;
+            margin-top: 0.5rem;
+            overflow: hidden;
+            display: none;
+        }
+
+        .semester-select:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown-content a {
+            display: block;
+            padding: 0.75rem;
+            color: white;
+            text-decoration: none;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #444;
+        }
+
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #242424;
+            overflow-x: hidden;
+            transition: 0.3s;
+            padding-top: 60px;
+            z-index: 999;
+        }
+
+        .sidebar a {
+            padding: 15px 25px;
+            text-decoration: none;
+            font-size: 1rem;
+            color: white;
+            display: block;
+            white-space: nowrap;
+        }
+
+        .sidebar a:hover {
+            background-color: #333;
+        }
+
+        .sidebar .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 25px;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .sidebar-active {
+            width: 250px;
+        }
+
+        .content-shifted {
+            margin-left: 250px;
+        }
+
+        @media screen and (max-width: 1024px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .main-content.content-shifted {
+                margin-left: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar" id="sidebar">
+        <span class="close-btn" onclick="toggleSidebar()">×</span>
+        <a href="#">Home</a>
+        <a href="#">Lectures</a>
+        <a href="#">Notes</a>
+        <a href="#">PYQ</a>
+        <a href="#">Grade Predictor</a>
+        <a href="#">About</a>
+        <a href="#">Groups</a>
+        <a href="#">Profile</a>
+    </div>
+
+    <nav class="navbar">
+        <button class="hamburger" onclick="toggleSidebar()">
+            <div></div>
+            <div></div>
+            <div></div>
+        </button>
+        <a href="#" class="logo">GRADIFY</a>
+        <div class="nav-links">
+            <a href="#">Home</a>
+            <a href="#">Lectures</a>
+            <a href="#">Notes</a>
+            <a href="#">PYQ</a>
+            <a href="#">Grade Predictor</a>
+            <a href="#">About</a>
+            <a href="#">Groups</a>
+            <button class="profile-btn">Profile</button>
+        </div>
+    </nav>
+
+    <div class="main-content" id="main-content">
+        <h2>📺 Lectures</h2>
+        <br>
+        <div class="semester-select">
+            <button class="select-btn">Select Semester</button>
+            <div class="dropdown-content">
+                <a href="#">Semester 1</a>
+                <a href="#">Semester 2</a>
+                <a href="#">Semester 3</a>
+                <a href="#">Semester 4</a>
+                <a href="#">Semester 5</a>
+                <a href="#">Semester 6</a>
+                <a href="#">Semester 7</a>
+                <a href="#">Semester 8</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            document.getElementById("sidebar").classList.toggle("sidebar-active");
+            document.getElementById("main-content").classList.toggle("content-shifted");
+        }
+    </script>
+</body>
+</html>
