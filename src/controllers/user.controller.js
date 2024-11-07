@@ -1,6 +1,4 @@
 import {User} from "../models/user.model.js"
-import { uploadoncloudinary } from "../../../practiceproj/src/utils/cloudinary.js"
-
 const signupuser = async(req,res)=>{
     const {fullname,enrollmentno,email,password} = req.body
     if (

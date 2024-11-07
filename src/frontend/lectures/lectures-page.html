@@ -1,238 +1,424 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Gradify Clone</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-        }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, sans-serif;
+      }
 
-        body {
-            background-color: #1a1a1a;
-            color: white;
-        }
+      body {
+        background-color: #1a1a1a;
+        color: white;
+      }
 
-        .navbar {
-            background-color: #242424;
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+      .navbar {
+        background-color: #242424;
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
 
-        .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: white;
-            text-decoration: none;
-        }
+      .logo {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: white;
+        text-decoration: none;
+      }
 
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+        align-items: center;
+      }
+
+      .nav-links a {
+        color: #e0e0e0;
+        text-decoration: none;
+        font-size: 0.9rem;
+      }
+
+      .nav-links a:hover {
+        color: white;
+      }
+
+      .profile-btn {
+        background-color: #333;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        border: none;
+        color: white;
+        cursor: pointer;
+      }
+
+      .hamburger {
+        display: none;
+        cursor: pointer;
+        border: none;
+        background: none;
+        padding: 0.5rem;
+      }
+
+      .hamburger div {
+        width: 25px;
+        height: 3px;
+        background-color: white;
+        margin: 5px 0;
+        transition: all 0.3s ease;
+      }
+
+      .main-content {
+        display: flex;
+        flex-direction: column;
+        padding: 2rem;
+        transition: margin-left 0.3s ease;
+      }
+
+      .semester-select {
+        position: relative;
+        width: 200px;
+      }
+
+      .select-btn {
+        width: 100%;
+        padding: 0.75rem;
+        background-color: #333;
+        border: none;
+        color: white;
+        border-radius: 4px;
+        cursor: pointer;
+        text-align: left;
+      }
+
+      .dropdown-content {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: #333;
+        border-radius: 4px;
+        margin-top: 0.5rem;
+        overflow: hidden;
+        display: none;
+        text-align: center;
+      }
+      .lecture-item {
+        background: linear-gradient(135deg, #333, #444);
+        padding: 1.5rem;
+        border-radius: 8px;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        cursor: pointer;
+      }
+
+      .lecture-item:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+      }
+
+      .lecture-item h3 {
+        color: #fff;
+        font-size: 1.2rem;
+        margin-bottom: 0.75rem;
+      }
+
+      .lecture-item p {
+        color: #ccc;
+        font-size: 0.95rem;
+        margin-bottom: 1rem;
+      }
+
+      .lecture-item a {
+        display: inline-block;
+        background-color: #4caf50;
+        color: #fff;
+        text-decoration: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 4px;
+        font-size: 0.9rem;
+        transition: background-color 0.3s ease;
+      }
+
+      .lecture-item a:hover {
+        background-color: #45a049;
+      }
+      .semester-select:hover .dropdown-content {
+        display: block;
+      }
+
+      .dropdown-content button {
+        display: inline-block;
+        padding: 0.75rem 1.5rem;
+        color: white;
+        background-color: #333;
+        text-decoration: none;
+        text-align: center;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      .dropdown-content button:hover {
+        background-color: #444;
+      }
+
+      .sidebar {
+        height: 100%;
+        width: 0;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #242424;
+        overflow-x: hidden;
+        transition: 0.3s;
+        padding-top: 60px;
+        z-index: 999;
+      }
+
+      .sidebar a {
+        padding: 15px 25px;
+        text-decoration: none;
+        font-size: 1rem;
+        color: white;
+        display: block;
+        white-space: nowrap;
+      }
+
+      .sidebar a:hover {
+        background-color: #333;
+      }
+
+      .sidebar .close-btn {
+        position: absolute;
+        top: 15px;
+        right: 25px;
+        font-size: 24px;
+        cursor: pointer;
+      }
+
+      .sidebar-active {
+        width: 250px;
+      }
+
+      .content-shifted {
+        margin-left: 250px;
+      }
+
+      .lectures-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+        margin-top: 2rem;
+      }
+/* 
+      .subject-select {
+        position: relative;
+        width: 200px;
+        margin-left: 1rem;
+      }
+
+      .subject-select .select-btn {
+        width: 100%;
+        padding: 0.75rem;
+        background-color: #333;
+        border: none;
+        color: white;
+        border-radius: 4px;
+        cursor: pointer;
+        text-align: left;
+      }
+
+      .subject-select .dropdown-content {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: #333;
+        border-radius: 4px;
+        margin-top: 0.5rem;
+        overflow: hidden;
+        display: none;
+        text-align: center;
+      }
+
+      .subject-select:hover .dropdown-content {
+        display: block;
+      }
+
+      .subject-select .dropdown-content button {
+        display: inline-block;
+        padding: 0.75rem 1.5rem;
+        color: white;
+        background-color: #333;
+        text-decoration: none;
+        text-align: center;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      .subject-select .dropdown-content button:hover {
+        background-color: #444;
+      } */
+
+      @media screen and (max-width: 1024px) {
         .nav-links {
-            display: flex;
-            gap: 2rem;
-            align-items: center;
-        }
-
-        .nav-links a {
-            color: #e0e0e0;
-            text-decoration: none;
-            font-size: 0.9rem;
-        }
-
-        .nav-links a:hover {
-            color: white;
-        }
-
-        .profile-btn {
-            background-color: #333;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            border: none;
-            color: white;
-            cursor: pointer;
+          display: none;
         }
 
         .hamburger {
-            display: none;
-            cursor: pointer;
-            border: none;
-            background: none;
-            padding: 0.5rem;
+          display: block;
         }
 
-        .hamburger div {
-            width: 25px;
-            height: 3px;
-            background-color: white;
-            margin: 5px 0;
-            transition: all 0.3s ease;
+        .main-content.content-shifted {
+          margin-left: 250px;
         }
-
-        .main-content {
-            padding: 2rem;
-            transition: margin-left 0.3s ease;
-        }
-
-        .semester-select {
-            position: relative;
-            width: 200px;
-        }
-
-        .select-btn {
-            width: 100%;
-            padding: 0.75rem;
-            background-color: #333;
-            border: none;
-            color: white;
-            border-radius: 4px;
-            cursor: pointer;
-            text-align: left;
-        }
-
-        .dropdown-content {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            width: 100%;
-            background-color: #333;
-            border-radius: 4px;
-            margin-top: 0.5rem;
-            overflow: hidden;
-            display: none;
-        }
-
-        .semester-select:hover .dropdown-content {
-            display: block;
-        }
-
-        .dropdown-content a {
-            display: block;
-            padding: 0.75rem;
-            color: white;
-            text-decoration: none;
-        }
-
-        .dropdown-content a:hover {
-            background-color: #444;
-        }
-
-        .sidebar {
-            height: 100%;
-            width: 0;
-            position: fixed;
-            top: 0;
-            left: 0;
-            background-color: #242424;
-            overflow-x: hidden;
-            transition: 0.3s;
-            padding-top: 60px;
-            z-index: 999;
-        }
-
-        .sidebar a {
-            padding: 15px 25px;
-            text-decoration: none;
-            font-size: 1rem;
-            color: white;
-            display: block;
-            white-space: nowrap;
-        }
-
-        .sidebar a:hover {
-            background-color: #333;
-        }
-
-        .sidebar .close-btn {
-            position: absolute;
-            top: 15px;
-            right: 25px;
-            font-size: 24px;
-            cursor: pointer;
-        }
-
-        .sidebar-active {
-            width: 250px;
-        }
-
-        .content-shifted {
-            margin-left: 250px;
-        }
-
-        @media screen and (max-width: 1024px) {
-            .nav-links {
-                display: none;
-            }
-
-            .hamburger {
-                display: block;
-            }
-
-            .main-content.content-shifted {
-                margin-left: 250px;
-            }
-        }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="sidebar" id="sidebar">
-        <span class="close-btn" onclick="toggleSidebar()">×</span>
-        <a href="#">Home</a>
-        <a href="#">Lectures</a>
-        <a href="#">Notes</a>
-        <a href="#">PYQ</a>
-        <a href="#">Grade Predictor</a>
-        <a href="#">About</a>
-        <a href="#">Groups</a>
-        <a href="#">Profile</a>
+      <span class="close-btn" onclick="toggleSidebar()">×</span>
+      <a href="./../dashboard/gradify-static.html">Home</a>
+      <a href="./../lectures/lectures-page.html">Lectures</a>
+      <a href="./../notes/gradify-notes.html">Notes</a>
+      <a href="./../pyq/pyq.html">PYQ</a>
+      <a href="./../grade_calculator/gradify-calculator.html"
+        >Grade Predictor</a
+      >
+      <a href="./../about/gradify-about.html">About</a>
+      <a href="#">Groups</a>
     </div>
 
     <nav class="navbar">
-        <button class="hamburger" onclick="toggleSidebar()">
-            <div></div>
-            <div></div>
-            <div></div>
-        </button>
-        <a href="#" class="logo">GRADIFY</a>
-        <div class="nav-links">
-            <a href="#">Home</a>
-            <a href="#">Lectures</a>
-            <a href="#">Notes</a>
-            <a href="#">PYQ</a>
-            <a href="#">Grade Predictor</a>
-            <a href="#">About</a>
-            <a href="#">Groups</a>
-            <button class="profile-btn">Profile</button>
-        </div>
+      <button class="hamburger" onclick="toggleSidebar()">
+        <div></div>
+        <div></div>
+        <div></div>
+      </button>
+      <a href="#" class="logo">GRADIFY</a>
+      <div class="nav-links">
+        <a href="./../dashboard/gradify-static.html">Home</a>
+        <a href="./../lectures/lectures-page.html">Lectures</a>
+        <a href="./../notes/gradify-notes.html">Notes</a>
+        <a href="./../pyq/pyq.html">PYQ</a>
+        <a href="./../grade_calculator/gradify-calculator.html"
+          >Grade Predictor</a
+        >
+        <a href="./../about/gradify-about.html">About</a>
+        <a href="#">Groups</a>
+        <button class="profile-btn">Profile</button>
+      </div>
     </nav>
 
     <div class="main-content" id="main-content">
-        <h2>📺 Lectures</h2>
-        <br>
-        <div class="semester-select">
-            <button class="select-btn">Select Semester</button>
-            <div class="dropdown-content">
-                <a href="#">Semester 1</a>
-                <a href="#">Semester 2</a>
-                <a href="#">Semester 3</a>
-                <a href="#">Semester 4</a>
-                <a href="#">Semester 5</a>
-                <a href="#">Semester 6</a>
-                <a href="#">Semester 7</a>
-                <a href="#">Semester 8</a>
-            </div>
+      <h2>📺 Lectures</h2>
+      <br />
+      <div class="semester-select">
+        <button class="select-btn">Select Semester</button>
+        <div class="dropdown-content">
+          <button data-semester="1">Semester 1</button>
+          <button data-semester="2">Semester 2</button>
+          <button data-semester="3">Semester 3</button>
+          <button data-semester="4">Semester 4</button>
+          <button data-semester="5">Semester 5</button>
+          <button data-semester="6">Semester 6</button>
+          <button data-semester="7">Semester 7</button>
+          <button data-semester="8">Semester 8</button>
         </div>
+      </div>
+      <!-- <div class="subject-select">
+        <button class="select-btn">Select Subject</button>
+        <div class="dropdown-content">
+          <button data-subject="mathematics">Mathematics</button>
+          <button data-subject="physics">Physics</button>
+          <button data-subject="chemistry">Chemistry</button>
+          <button data-subject="computer-science">Computer Science</button>
+          <button data-subject="electrical-engineering">
+            Electrical Engineering
+          </button>
+        </div>
+      </div> -->
     </div>
+    <div id="lectures-container"></div>
+  </body>
+  <script>
+    function toggleSidebar() {
+      document.getElementById("sidebar").classList.toggle("sidebar-active");
+      document
+        .getElementById("main-content")
+        .classList.toggle("content-shifted");
+    }
+    const dropdownButtons = document.querySelectorAll(
+      ".dropdown-content button"
+    );
 
-    <script>
-        function toggleSidebar() {
-            document.getElementById("sidebar").classList.toggle("sidebar-active");
-            document.getElementById("main-content").classList.toggle("content-shifted");
+    dropdownButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const semester = button.dataset.semester;
+        loadSemesterLectures(semester);
+      });
+    });
+
+    async function loadSemesterLectures(semester) {
+      try {
+        const response = await fetch(`http://localhost:4000/v1/users/lecture`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ semester_button: semester }),
+        });
+
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
         }
-    </script>
-</body>
+
+        const lectures = await response.json();
+        // console.log(lectures);
+        displayLectures(lectures);
+      } catch (error) {
+        console.error("Error fetching lectures:", error);
+      }
+    }
+
+    function displayLectures(lectures) {
+      const lecturesContainer = document.getElementById("lectures-container");
+      lecturesContainer.innerHTML = "";
+
+      if (lectures.length === 0) {
+        lecturesContainer.innerHTML =
+          "<p>No lectures available for the selected semester.</p>";
+      } else {
+        lectures.forEach((lecture) => {
+          const lectureElement = document.createElement("div");
+          lectureElement.classList.add("lecture-item");
+
+          const titleElement = document.createElement("h3");
+          titleElement.textContent = lecture.videotitle;
+
+          const descriptionElement = document.createElement("p");
+          descriptionElement.textContent = lecture.videodescription;
+
+          const linkElement = document.createElement("a");
+          linkElement.href = lecture.videofile;
+          linkElement.textContent = "Watch Lecture";
+          linkElement.target = lecture.videofile;
+
+          lectureElement.appendChild(titleElement);
+          lectureElement.appendChild(descriptionElement);
+          lectureElement.appendChild(linkElement);
+          lecturesContainer.appendChild(lectureElement);
+        });
+      }
+    }
+  </script>
 </html>
