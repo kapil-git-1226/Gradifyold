@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gradify</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <div id="login-form">
+      <h2>Login</h2>
+      <input type="text" id="login-email" placeholder="Email Address" required>
+      <input type="password" id="login-password" placeholder="Password" required>
+      <button onclick="login()">Login</button>
+    </div>
+    <div id="signup-form" style="display: none;">
+      <h2>Sign Up</h2>
+      <input type="text" id="signup-name" placeholder="Full Name" required>
+      <input type="text" id="signup-enrollment" placeholder="Enrollment Number" required>
+      <input type="text" id="signup-email" placeholder="Email Address" required>
+      <input type="password" id="signup-password" placeholder="Password" required>
+      <input type="password" id="signup-confirm-password" placeholder="Confirm Password" required>
+      <button onclick="signup()">Sign Up</button>
+    </div>
+    <div class="signup-link">
+      <a href="#" onclick="toggleForm()">Don't have an account? Sign Up</a>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

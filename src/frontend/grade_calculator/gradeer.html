@@ -169,6 +169,7 @@
         outline: none;
         border-color: #06b6d4;
       }
+
       .required-sgpa {
         color: #06b6d4;
         font-size: 0.9rem;
@@ -190,6 +191,35 @@
 
       .calculate-btn:hover {
         background-color: #0891b2;
+      }
+
+      /* New styles for result messages */
+      .result-container {
+        margin-top: 1.5rem;
+        padding: 1rem;
+        border-radius: 5px;
+        background-color: #333;
+        text-align: center;
+      }
+
+      .result-text {
+        font-size: 1.1rem;
+        color: #e0e0e0;
+        margin-bottom: 0.5rem;
+      }
+
+      .error-message {
+        color: #ef4444;
+        font-size: 1.1rem;
+        text-align: center;
+        margin-top: 1rem;
+      }
+
+      .success-message {
+        color: #06b6d4;
+        font-size: 1.1rem;
+        text-align: center;
+        margin-top: 1rem;
       }
 
       @media screen and (max-width: 1024px) {
@@ -358,15 +388,15 @@
         </div>
 
         <button type="submit" class="calculate-btn">Calculate</button>
+        <div id="result-message"></div>
       </div>
     </div>
 
     <script>
+      // Previous functions remain
       function toggleSidebar() {
         document.getElementById("sidebar").classList.toggle("sidebar-active");
-        document
-          .getElementById("main-content")
-          .classList.toggle("content-shifted");
+        document.getElementById("main-content").classList.toggle("content-shifted");
       }
 
       document.querySelectorAll('input[type="number"]').forEach((input) => {
@@ -377,60 +407,61 @@
         });
       });
 
-      function displayRequiredSGPA(requiredSGPApersem) {
-        const semesterInputs = document.querySelectorAll(
-          '.calculator-container .form-group input[type="number"]'
-        );
-
-        semesterInputs.forEach((input, index) => {
-          const semesterNumber = index + 1;
-          const semesterLabel = input.parentElement.querySelector("label");
-          const requiredSGPAElement = document.createElement("div");
-          requiredSGPAElement.classList.add("required-sgpa");
-          requiredSGPAElement.textContent = `Required SGPA for Semester ${semesterNumber}: ${requiredSGPApersem.toFixed(2)}`;
-          semesterLabel.appendChild(requiredSGPAElement);
-        });
-      }
-
       function getCgpaAndSgpaSum() {
-        const desiredCgpaInput = document.querySelector(
-          '.desired-cgpa input[type="number"]'
-        );
+        const desiredCgpaInput = document.querySelector('.desired-cgpa input[type="number"]');
         const desiredCgpa = parseFloat(desiredCgpaInput.value) || 0;
-        const sgpaInputs = document.querySelectorAll(
-          '.calculator-container .form-group input[type="number"]'
-        );
+        const sgpaInputs = document.querySelectorAll('.calculator-container .form-group input[type="number"]');
         let sgpaSum = 0;
         let completedSemesters = 0;
+        
         sgpaInputs.forEach((input) => {
           let value = parseFloat(input.value);
-          if (!isNaN(value) && value != 0) {
+          if (!isNaN(value) && value !== 0) {
             sgpaSum += value;
             completedSemesters++;
           }
         });
+        
         return { desiredCgpa, sgpaSum, completedSemesters };
       }
 
-      function calculateRequiredSGPA(desiredCgpa, sgpaSum, completedSemesters) {
-        let requiredSGPApersem =
-          (desiredCgpa * 8 - sgpaSum) / (8 - completedSemesters);
-        if (requiredSGPApersem>10){
-          requiredSGPApersem=10;
+      function displayResult(requiredSGPA, remainingSemesters) {
+        const resultContainer = document.getElementById('result-message');
+        
+        if (requiredSGPA > 10) {
+          resultContainer.innerHTML = `
+            <div class="error-message">
+              It is not possible to achieve the desired CGPA with the current grades.
+              <br>Required SGPA per semester would be ${requiredSGPA.toFixed(2)}, which exceeds the maximum possible SGPA of 10.0
+            </div>
+          `;
+        } else if (remainingSemesters <= 0) {
+          resultContainer.innerHTML = `
+            <div class="error-message">
+              All semesters are completed. No further calculation needed.
+            </div>
+          `;
+        } else {
+          resultContainer.innerHTML = `
+            <div class="success-message">
+              To achieve your desired CGPA, you need to maintain an SGPA of ${requiredSGPA.toFixed(2)} 
+              for the remaining ${remainingSemesters} semester${remainingSemesters > 1 ? 's' : ''}.
+            </div>
+          `;
         }
-        displayRequiredSGPA(requiredSGPApersem);
-        return requiredSGPApersem;
       }
 
       document.querySelector(".calculate-btn").addEventListener("click", () => {
-        const { desiredCgpa, sgpaSum, completedSemesters } =
-          getCgpaAndSgpaSum();
-        let requiredSGPApersem = calculateRequiredSGPA(
-          desiredCgpa,
-          sgpaSum,
-          completedSemesters
-        );
-        console.log(requiredSGPApersem);
+        const { desiredCgpa, sgpaSum, completedSemesters } = getCgpaAndSgpaSum();
+        const remainingSemesters = 8 - completedSemesters;
+        
+        if (desiredCgpa === 0) {
+          displayResult(0, remainingSemesters);
+          return;
+        }
+        
+        const requiredSGPApersem = (desiredCgpa * 8 - sgpaSum) / remainingSemesters;
+        displayResult(requiredSGPApersem, remainingSemesters);
       });
     </script>
   </body>
